@@ -29,17 +29,23 @@ export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('home');
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  // Mock checking for auth - in a real app, check your persistent storage
   useEffect(() => {
-    // Check if we are running in an Android container
-    const isNative = (window as any).Capacitor?.isNative;
-    console.log('Running on Native:', !!isNative);
-    
-    // Simulate auth check
-    const savedUser = localStorage.getItem('trustrium_user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+    try {
+      // Check if we are running in an Android container
+      const isNative = (window as any).Capacitor?.isNative;
+      console.log('Trustrium: Running on Native:', !!isNative);
+      console.log('Trustrium: Current URL:', window.location.href);
+      
+      // Simulate auth check
+      const savedUser = localStorage.getItem('trustrium_user');
+      if (savedUser) {
+        setUser(JSON.parse(savedUser));
+      }
+    } catch (e) {
+      console.error('Trustrium: Initialization error', e);
+      setError(String(e));
     }
   }, []);
 
@@ -54,6 +60,22 @@ export default function App() {
     setUser(null);
     localStorage.removeItem('trustrium_user');
   };
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-red-900 flex flex-col items-center justify-center p-6 text-white text-center">
+        <Shield size={48} className="mb-4" />
+        <h1 className="text-2xl font-bold">App Error</h1>
+        <p className="mt-2 text-red-200">{error}</p>
+        <button 
+          onClick={() => window.location.reload()}
+          className="mt-6 bg-white text-red-900 px-6 py-2 rounded-lg font-bold"
+        >
+          Reload App
+        </button>
+      </div>
+    );
+  }
 
   if (!user) {
     return (
