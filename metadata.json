@@ -1,0 +1,6 @@
+{
+  "name": "Trustrium",
+  "description": "Secure and reliable mobile access to the Trustrium platform.",
+  "requestFramePermissions": ["camera", "geolocation"],
+  "majorCapabilities": ["mobile-app", "authentication"]
+}
