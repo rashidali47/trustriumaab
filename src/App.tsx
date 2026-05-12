@@ -14,9 +14,15 @@ import {
   X,
   Bell,
   Search,
-  ChevronRight
+  ChevronLeft,
+  Wrench,
+  LayoutGrid
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { ToolGrid } from './components/Navigation';
+import { ToolRenderer } from './components/ToolTemplates';
+import { ToolMetadata, TOOLS } from './constants/tools';
+import { cn } from './lib/utils';
 
 // --- TYPES ---
 interface UserProfile {
@@ -27,30 +33,22 @@ interface UserProfile {
 
 export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('home');
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [selectedTool, setSelectedTool] = useState<ToolMetadata | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     try {
-      // Check if we are running in an Android container
-      const isNative = (window as any).Capacitor?.isNative;
-      console.log('Trustrium: Running on Native:', !!isNative);
-      console.log('Trustrium: Current URL:', window.location.href);
-      
-      // Simulate auth check
       const savedUser = localStorage.getItem('trustrium_user');
       if (savedUser) {
         setUser(JSON.parse(savedUser));
       }
     } catch (e) {
-      console.error('Trustrium: Initialization error', e);
       setError(String(e));
     }
   }, []);
 
   const handleLogin = () => {
-    // In a real app, redirect to your auth provider
     const mockUser = { name: 'Student Admin', email: 'rashid@trustrium.com', isLoggedIn: true };
     setUser(mockUser);
     localStorage.setItem('trustrium_user', JSON.stringify(mockUser));
@@ -58,20 +56,18 @@ export default function App() {
 
   const handleLogout = () => {
     setUser(null);
+    setSelectedTool(null);
     localStorage.removeItem('trustrium_user');
   };
 
   if (error) {
     return (
-      <div className="min-h-screen bg-red-900 flex flex-col items-center justify-center p-6 text-white text-center">
-        <Shield size={48} className="mb-4" />
-        <h1 className="text-2xl font-bold">App Error</h1>
-        <p className="mt-2 text-red-200">{error}</p>
-        <button 
-          onClick={() => window.location.reload()}
-          className="mt-6 bg-white text-red-900 px-6 py-2 rounded-lg font-bold"
-        >
-          Reload App
+      <div className="min-h-screen bg-red-950 flex flex-col items-center justify-center p-6 text-white text-center">
+        <Shield size={48} className="mb-4 text-red-500" />
+        <h1 className="text-2xl font-black italic">SYSTEM ERROR</h1>
+        <p className="mt-2 text-red-200/60 text-sm font-mono">{error}</p>
+        <button onClick={() => window.location.reload()} className="mt-8 bg-white text-red-950 px-8 py-3 rounded-2xl font-bold">
+          REBOOT SYSTEM
         </button>
       </div>
     );
@@ -79,105 +75,122 @@ export default function App() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-6 text-white text-center">
-        <motion.div 
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="mb-8"
-        >
-          <div className="w-20 h-20 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-500/50">
-            <Shield size={40} />
-          </div>
-          <h1 className="text-3xl font-bold tracking-tight">Trustrium</h1>
-          <p className="text-slate-400 mt-2">Secure Mobile Access</p>
-        </motion.div>
-
-        <div className="w-full max-w-sm space-y-4">
-          <button 
-            id="login-button"
-            onClick={handleLogin}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-4 rounded-xl transition-all active:scale-95 shadow-lg shadow-indigo-900/20"
-          >
-            Connect to trustrium.com
-          </button>
-          <p className="text-xs text-slate-500 mt-4 px-4 leading-relaxed">
-            By logging in, you agree to our Terms of Service and Privacy Policy.
-          </p>
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-8 text-white relative overflow-hidden">
+        {/* Background Gradients */}
+        <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-600 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600 blur-[120px] rounded-full" />
         </div>
+
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="relative z-10 text-center space-y-8"
+        >
+          <div className="w-24 h-24 bg-indigo-600 rounded-[2.5rem] flex items-center justify-center mx-auto shadow-2xl shadow-indigo-600/50 rotate-3">
+            <Shield size={48} className="text-white" />
+          </div>
+          <div className="space-y-2">
+            <h1 className="text-5xl font-black tracking-tightest italic">TRUSTRIUM</h1>
+            <p className="text-slate-500 font-bold uppercase tracking-widest text-xs mt-2">The Utility Fortress 2026</p>
+          </div>
+          <div className="w-full max-w-xs mx-auto pt-8">
+            <button 
+              onClick={handleLogin}
+              className="w-full bg-white text-slate-950 font-black py-5 rounded-3xl transition-transform active:scale-95 shadow-xl"
+            >
+              INITIALIZE SECURE ACCESS
+            </button>
+          </div>
+        </motion.div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
-      {/* Mobile Top Bar */}
-      <header className="fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 z-50">
-        <button 
-          id="menu-toggle"
-          onClick={() => setIsSidebarOpen(true)}
-          className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
-        >
-          <Menu size={24} />
-        </button>
-        <span className="font-bold text-lg tracking-tight text-indigo-600">Trustrium</span>
-        <button 
-          id="notification-bell"
-          className="p-2 hover:bg-slate-100 rounded-lg transition-colors relative"
-        >
-          <Bell size={24} />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-        </button>
+      {/* Dynamic Header */}
+      <header className="fixed top-0 left-0 right-0 h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200 flex items-center justify-between px-6 z-50">
+        <div className="flex items-center gap-4">
+          {selectedTool ? (
+             <button 
+              onClick={() => setSelectedTool(null)}
+              className="p-3 bg-slate-100 hover:bg-slate-200 rounded-2xl transition-colors"
+            >
+              <ChevronLeft size={20} />
+            </button>
+          ) : (
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="p-3 hover:bg-slate-100 rounded-2xl transition-colors"
+            >
+              <Menu size={20} />
+            </button>
+          )}
+          <div className="flex flex-col">
+            <span className="font-black text-lg tracking-tighter leading-none italic text-indigo-600">
+               {selectedTool ? 'UTILITY' : 'TRUSTRIUM'}
+            </span>
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">
+               {selectedTool ? selectedTool.name : 'Vercel Node: TLS-Security'}
+            </span>
+          </div>
+        </div>
+        
+        {!selectedTool && (
+           <button className="relative p-3 bg-indigo-50 text-indigo-600 rounded-2xl">
+              <Bell size={20} />
+              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white" />
+           </button>
+        )}
       </header>
 
-      {/* Main Content Area */}
-      <main className="pt-20 pb-24 px-4 max-w-2xl mx-auto">
-        {activeTab === 'home' && (
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-6"
-          >
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-              <h2 className="text-xl font-bold mb-1">Welcome back, {user.name}</h2>
-              <p className="text-slate-500 text-sm">Your security status is healthy</p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <DashboardCard icon={<Shield className="text-green-500" />} label="Identity" value="98%" />
-              <DashboardCard icon={<Settings className="text-blue-500" />} label="Devices" value="2 Active" />
-            </div>
-
-            <div className="space-y-3">
-              <h3 className="font-semibold text-slate-700 ml-1">Recent Activity</h3>
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-white p-4 rounded-xl flex items-center justify-between border border-slate-200 shadow-sm active:bg-slate-50 transition-colors cursor-pointer">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center">
-                      <Search size={18} className="text-slate-500" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-sm">Login from Chrome</p>
-                      <p className="text-xs text-slate-400">2 hours ago</p>
-                    </div>
-                  </div>
-                  <ChevronRight size={16} className="text-slate-300" />
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-
-        {/* Other tabs can go here */}
+      {/* Content */}
+      <main className="pt-28 pb-20 px-6 max-w-4xl mx-auto min-h-screen">
+        <AnimatePresence mode="wait">
+          {!selectedTool ? (
+            <motion.div
+              key="grid"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+            >
+              <ToolGrid onSelect={setSelectedTool} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="tool"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="pb-10"
+            >
+              <ToolRenderer tool={selectedTool} />
+              
+              <div className="mt-12 p-8 bg-slate-900 rounded-[2.5rem] text-white">
+                 <h4 className="font-black text-lg mb-2">Strategy Tip</h4>
+                 <p className="text-slate-400 text-sm">Target vertical long-tail keywords for this tool. For example: "Secure {selectedTool.name} for developers".</p>
+                 <div className="flex gap-2 mt-6">
+                    {selectedTool.keywords.slice(0, 3).map(kw => (
+                       <span key={kw} className="px-3 py-1 bg-slate-800 rounded-full text-[10px] text-slate-500 font-bold uppercase tracking-wider">#{kw.replace(/\s/g, '')}</span>
+                    ))}
+                 </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
 
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 h-20 bg-white border-t border-slate-200 flex items-center justify-around px-2 z-40">
-        <NavButton active={activeTab === 'home'} icon={<Home />} label="Home" onClick={() => setActiveTab('home')} />
-        <NavButton active={activeTab === 'profile'} icon={<User />} label="Profile" onClick={() => setActiveTab('profile')} />
-        <NavButton active={activeTab === 'settings'} icon={<Settings />} label="Settings" onClick={() => setActiveTab('settings')} />
-      </nav>
+      {/* Global Navigation - Bottom bar style */}
+      {!selectedTool && (
+        <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-48px)] max-w-md h-20 bg-slate-950 rounded-[2.5rem] shadow-2xl flex items-center justify-around px-2 z-[60] border border-white/5">
+            <BottomNavBtn active={!selectedTool} icon={<LayoutGrid />} onClick={() => setSelectedTool(null)} />
+            <BottomNavBtn active={false} icon={<User />} onClick={() => setIsSidebarOpen(true)} />
+            <div className="w-12 h-1 bg-slate-800 absolute bottom-3 rounded-full opacity-20" />
+        </nav>
+      )}
 
-      {/* Sidebar Drawer */}
+      {/* Sidebar Overlay */}
       <AnimatePresence>
         {isSidebarOpen && (
           <>
@@ -186,35 +199,37 @@ export default function App() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsSidebarOpen(false)}
-              className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[60]"
+              className="fixed inset-0 bg-slate-950/60 backdrop-blur-md z-[70]"
             />
             <motion.div 
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 left-0 bottom-0 w-72 bg-white z-[70] shadow-2xl p-6"
+              className="fixed top-0 left-0 bottom-0 w-80 bg-white z-[80] shadow-2xl p-8 flex flex-col"
             >
-              <div className="flex items-center justify-between mb-8">
-                <span className="font-bold text-xl">Menu</span>
-                <button onClick={() => setIsSidebarOpen(false)} className="p-2 hover:bg-slate-100 rounded-full">
+              <div className="flex items-center justify-between mb-12">
+                <span className="font-black text-2xl italic">TRUSTRIUM</span>
+                <button onClick={() => setIsSidebarOpen(false)} className="p-2 bg-slate-100 rounded-full">
                   <X size={20} />
                 </button>
               </div>
 
-              <div className="space-y-4">
-                <MenuLink icon={<User />} label="Account Settings" />
-                <MenuLink icon={<Shield />} label="Security Privacy" />
-                <hr className="border-slate-100 my-4" />
-                <button 
-                  id="logout-button"
-                  onClick={handleLogout}
-                  className="flex items-center gap-3 text-red-500 font-medium p-3 w-full hover:bg-red-50 rounded-xl transition-colors"
-                >
-                  <LogOut size={20} />
-                  <span>Sign Out</span>
-                </button>
+              <div className="flex-1 space-y-6">
+                <MenuLink icon={<User />} label="Profile Access" />
+                <MenuLink icon={<Shield />} label="Security Vault" />
+                <MenuLink icon={<Settings />} label="Preferences" />
+                <hr className="border-slate-100" />
+                <MenuLink icon={<Wrench />} label="Developer mode" />
               </div>
+
+              <button 
+                onClick={handleLogout}
+                className="w-full p-5 bg-red-50 text-red-600 rounded-3xl font-black flex items-center justify-center gap-3 hover:bg-red-100 transition-colors"
+              >
+                <LogOut size={20} />
+                <span>TERMINATE CASE</span>
+              </button>
             </motion.div>
           </>
         )}
@@ -223,34 +238,32 @@ export default function App() {
   );
 }
 
-function DashboardCard({ icon, label, value }: { icon: React.ReactNode, label: string, value: string }) {
-  return (
-    <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-      <div className="mb-3">{icon}</div>
-      <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">{label}</p>
-      <p className="text-xl font-bold text-slate-900">{value}</p>
-    </div>
-  );
-}
-
-function NavButton({ active, icon, label, onClick }: { active: boolean, icon: React.ReactNode, label: string, onClick: () => void }) {
+function BottomNavBtn({ active, icon, onClick }: { active: boolean, icon: React.ReactNode, onClick: () => void }) {
   return (
     <button 
       onClick={onClick}
-      className={`flex flex-col items-center justify-center gap-1 w-20 transition-colors ${active ? 'text-indigo-600' : 'text-slate-400 font-medium'}`}
+      className={cn(
+        "p-4 rounded-3xl transition-all relative group",
+        active ? "bg-white text-slate-950" : "text-slate-500 hover:text-white"
+      )}
     >
-      <div className={`p-1 rounded-lg ${active ? 'bg-indigo-50' : ''}`}>
-        {React.cloneElement(icon as React.ReactElement, { size: 24, strokeWidth: active ? 2.5 : 2 })}
-      </div>
-      <span className="text-[10px] font-bold uppercase tracking-wider">{label}</span>
+      {React.cloneElement(icon as React.ReactElement, { size: 24, strokeWidth: active ? 3 : 2 })}
+      {active && (
+        <motion.div 
+          layoutId="active-indicator"
+          className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-indigo-500 rounded-full"
+        />
+      )}
     </button>
   );
 }
 
 function MenuLink({ icon, label }: { icon: React.ReactNode, label: string }) {
   return (
-    <div className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl cursor-pointer transition-colors text-slate-600 font-medium">
-      {React.cloneElement(icon as React.ReactElement, { size: 20 })}
+    <div className="flex items-center gap-4 p-4 hover:bg-slate-50 rounded-2xl cursor-pointer transition-colors text-slate-600 font-bold">
+      <div className="p-2 bg-slate-100 rounded-xl text-slate-400">
+        {React.cloneElement(icon as React.ReactElement, { size: 20 })}
+      </div>
       <span>{label}</span>
     </div>
   );

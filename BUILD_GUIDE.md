@@ -12,9 +12,13 @@ Congratulations on taking this big step! Since your local machine is slow, we us
 ## Why we used Capacitor (and fixed the White Screen):
 The white screen you saw was likely because the mobile WebView blocks local file cookies/routing. We added a `server` configuration in `capacitor.config.ts` that forces the app to use `https://app.trustrium.com` as its internal hostname. This makes login redirects work perfectly!
 
-## Next Steps for Play Store (Professional Polish):
-- **Icons & Splash:** Use a tool like `@capacitor/assets` to generate all icon sizes at once.
-- **Signing:** For the Play Store, you need a "Signed AAB". To do this in the cloud, you'll eventually need to add your `KEYSTORE` file to GitHub Secrets.
-- **Privacy Policy:** Since you handle login, the Play Store requires a privacy policy URL. You can host one for free on GitHub Pages if needed.
+## Brand New Features 🛠️
+- **Professional Utility Hub:** We've added a "Tools" section in the navigation.
+- **Client-Side ZIP Extractor:** Extract and view ZIP files directly in the app. This is fast and secure because no data leaves the device!
+- **Password Generator:** Generate strong, secure passwords on the fly.
+- **Text Converter:** Quick text manipulation tools (Uppercase/Lowercase).
+- **SEO Ready:** The app now includes optimized meta tags, descriptions, and open-graph data, making it ready for high visibility on Google and social media.
 
-You are doing great! Keep building.
+## Pro Tip for Play Store:
+Using these tools gives your app more "Utility Value," which Google Play Store reviewers love. It moves your app from being a simple "web wrapper" to a functional mobile utility!
+
