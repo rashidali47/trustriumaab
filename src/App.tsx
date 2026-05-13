@@ -1,27 +1,27 @@
 
-import { db, auth } from "./lib/firebase";
+import { db, auth } from "../lib/firebase";
 
 import React, { useContext, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { UserProvider, UserContext } from './contexts/UserContext';
-import { AppContext } from './contexts/AppContext';
-import AuthPage from './pages/AuthPage';
-import HomePage from './pages/HomePage';
-import MinePage from './pages/MinePage';
-import WalletPage from './pages/WalletPage';
-import ExplorePage from './pages/ExplorePage';
-import ProfilePage from './pages/ProfilePage';
-import ReferralPage from './pages/ReferralPage';
-import SettingsPage from './pages/SettingsPage';
-import KycPage from './pages/KycPage'; 
+import { UserProvider, UserContext } from '../contexts/UserContext';
+import { AppContext } from '../contexts/AppContext';
+import AuthPage from '../pages/AuthPage';
+import HomePage from '../pages/HomePage';
+import MinePage from '../pages/MinePage';
+import WalletPage from '../pages/WalletPage';
+import ExplorePage from '../pages/ExplorePage';
+import ProfilePage from '../pages/ProfilePage';
+import ReferralPage from '../pages/ReferralPage';
+import SettingsPage from '../pages/SettingsPage';
+import KycPage from '../pages/KycPage'; 
 import DailyTaskPage from './pages/DailyTaskPage';
-import LeaderboardPage from './pages/LeaderboardPage';
-import VerificationPendingPage from './pages/VerificationPendingPage'; 
-import AdminPage from './pages/AdminPage';
-import MainLayout from './components/layout/MainLayout';
-import ToastContainer from './components/ui/ToastContainer'; 
-import SplashScreen from './components/layout/SplashScreen'; 
-import GuestModal from './components/ui/GuestModal';
+import LeaderboardPage from '../pages/LeaderboardPage';
+import VerificationPendingPage from '../pages/VerificationPendingPage'; 
+import AdminPage from '../pages/AdminPage';
+import MainLayout from '../components/layout/MainLayout';
+import ToastContainer from '../components/ui/ToastContainer'; 
+import SplashScreen from '../components/layout/SplashScreen'; 
+import GuestModal from '../components/ui/GuestModal';
 
 const App: React.FC = () => {
   const { theme } = useContext(AppContext);

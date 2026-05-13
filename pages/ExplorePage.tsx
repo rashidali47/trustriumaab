@@ -4,7 +4,7 @@ import { Coins, Globe, Twitter, Send, Instagram, Users, Activity, Crown, Chevron
 import { db } from '../lib/firebase';
 import { onSnapshot, collection } from 'firebase/firestore';
 import { UserContext } from '../contexts/UserContext';
-import { LeaderboardUser } from '../types';
+import { LeaderboardUser } from '../src/types';
 
 const CARD_CLASSES = "bg-white dark:bg-brand-gray-900 rounded-3xl border border-brand-gray-100 dark:border-brand-gray-800 shadow-sm transition-all duration-300 hover:shadow-md";
 

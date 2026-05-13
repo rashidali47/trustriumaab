@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 import { AppContext } from '../contexts/AppContext';
-import { KycStatus } from '../types';
+import { KycStatus } from '../src/types';
 import { ArrowUpRight, X, Gift, Zap, ShieldCheck, ChevronRight, Activity, Sparkles, Wallet, Star, Sun, Moon, PackageOpen, Bell } from 'lucide-react';
 import NotificationPanel from '../components/ui/NotificationPanel';
 

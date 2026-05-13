@@ -4,7 +4,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { UserContext } from '../contexts/UserContext';
 import { ArrowDown, ArrowUp, Repeat, Copy, ShieldCheck, Eye, EyeOff, X, QrCode, AlertTriangle, ShieldX, Key, Mail, Clock, Send, Gift, Pickaxe, UserPlus, Share2, Search, User, ChevronRight, Filter, Loader2, Coins, Wallet, History, ArrowRightLeft, ChevronDown, ArrowUpRight, ArrowDownLeft, Plus, Globe, Check } from 'lucide-react';
-import { Transaction, KycStatus } from '../types';
+import { Transaction, KycStatus } from '../src/types';
 import { AppContext } from '../contexts/AppContext'; // Import AppContext
 import { RewardAnimation } from '../components/ui/RewardAnimation';
 

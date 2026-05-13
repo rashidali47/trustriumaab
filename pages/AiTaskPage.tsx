@@ -71,7 +71,7 @@ const AiTaskPage: React.FC = () => {
                 }
             });
 
-            if (response.text) {
+            if (response.text && response.text !== "undefined") {
                 setAiQuestion(JSON.parse(response.text));
             }
         } catch (error) {

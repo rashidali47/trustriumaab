@@ -3,7 +3,7 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { UserContext, MiningTierInfo } from '../contexts/UserContext';
 import { Pickaxe, TrendingUp, History, CheckCircle, ChevronDown, ChevronUp, Star, Zap, Users, Gift, Coins } from 'lucide-react';
-import { Transaction } from '../types';
+import { Transaction } from '../src/types';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LabelList } from 'recharts';
 import { motion } from 'motion/react';
 

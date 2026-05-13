@@ -2,7 +2,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { UserContext, MissionWithProgress } from '../contexts/UserContext';
 import { Users, Link, Bell, UserCheck, UserX, Zap, Send, PlusCircle, CheckCircle, ZapOff, Package, Share2, Award, Copy, ChevronUp, ChevronDown, Gift, ShieldCheck, AlertTriangle, Trophy } from 'lucide-react';
-import { KycStatus, LeaderboardUser } from '../types';
+import { KycStatus, LeaderboardUser } from '../src/types';
 import { AppContext } from '../contexts/AppContext'; // Import AppContext for toasts
 import { RewardAnimation } from '../components/ui/RewardAnimation';
 import { useNavigate } from 'react-router-dom';

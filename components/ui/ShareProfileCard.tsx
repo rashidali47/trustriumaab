@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useContext, useState } from 'react';
-import { User as UserType, KycStatus } from '../../types';
+import { User as UserType, KycStatus } from '../../src/types';
 import { MiningTierInfo } from '../../contexts/UserContext';
 import { X, Share2, Download, Loader2 } from 'lucide-react';
 import { AppContext } from '../../contexts/AppContext';

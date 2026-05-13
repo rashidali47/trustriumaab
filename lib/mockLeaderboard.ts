@@ -1,5 +1,5 @@
 
-import { LeaderboardUser } from '../types';
+import { LeaderboardUser } from '../src/types';
 
 export const mockRiumLeaderboard: LeaderboardUser[] = [
     { rank: 1, avatar: 'https://i.pravatar.cc/40?u=rank1', username: 'CryptoKing', value: 15234.87 },

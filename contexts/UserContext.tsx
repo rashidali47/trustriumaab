@@ -34,7 +34,7 @@ import {
   sendPasswordResetEmail as firebaseSendPasswordResetEmail,
   User as FirebaseUser
 } from 'firebase/auth';
-import { User, KycStatus, Transaction, KycData, AppNotification, UserSettings, Referral, LeaderboardUser, Mission, UserMissionProgress } from '../types';
+import { User, KycStatus, Transaction, KycData, AppNotification, UserSettings, Referral, LeaderboardUser, Mission, UserMissionProgress } from '../src/types';
 
 const CUSTOM_EMAIL_CONFIG = {
     enabled: false, 

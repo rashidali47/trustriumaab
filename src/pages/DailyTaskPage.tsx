@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import { GoogleGenAI, Type } from "@google/genai";
-import { UserContext } from '../contexts/UserContext';
-import { AppContext } from '../contexts/AppContext';
+import { UserContext } from '../../contexts/UserContext';
+import { AppContext } from '../../contexts/AppContext';
 import { ShieldCheck, ShieldAlert, Clock, ArrowRight, Loader2, Info, CheckCircle2, Sparkles, MessageSquare } from 'lucide-react';
-import { RewardAnimation } from '../components/ui/RewardAnimation';
+import { RewardAnimation } from '../../components/ui/RewardAnimation';
 import { useNavigate } from 'react-router-dom';
-import ConfirmationModal from '../components/ui/ConfirmationModal';
+import ConfirmationModal from '../../components/ui/ConfirmationModal';
 
 interface SystemChallenge {
     question: string;
@@ -118,7 +118,7 @@ const DailyTaskPage: React.FC = () => {
                 }
             });
 
-            if (response.text) {
+            if (response.text && response.text !== "undefined") {
                 setChallenge(JSON.parse(response.text));
             }
         } catch (error) {
@@ -183,7 +183,7 @@ const DailyTaskPage: React.FC = () => {
                 }
             });
             
-            if (response.text) {
+            if (response.text && response.text !== "undefined") {
                 const result = JSON.parse(response.text);
                 if (result.isFollower) {
                     const success = await submitXFollowTask(xHandle);

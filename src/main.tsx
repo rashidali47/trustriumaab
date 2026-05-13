@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 // Fix: Use named import for HashRouter to resolve module export issue.
 import { HashRouter } from 'react-router-dom';
 import App from './App';
-import { AppProvider } from './contexts/AppContext';
+import { AppProvider } from '../contexts/AppContext';
 import './index.css';
 
 interface Props {

@@ -4,7 +4,7 @@ import React, { useContext, useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext';
 import { User, Shield, Bell, Lock, LogOut, ChevronRight, CheckCircle, Clock, XCircle, AlertCircle, Edit, Save, X, Camera, Award, Star, UploadCloud, User as UserIcon, Globe2, FileText, ArrowLeft, Loader2, ShieldCheck as VerifiedShield, Share2, ExternalLink, RefreshCw, Smartphone, MapPin, CalendarClock, ShieldAlert } from 'lucide-react';
-import { KycStatus, KycData, User as UserType } from '../types';
+import { KycStatus, KycData, User as UserType } from '../src/types';
 import { COUNTRIES } from '../lib/countries';
 import ShareProfileCard from '../components/ui/ShareProfileCard';
 
