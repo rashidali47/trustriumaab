@@ -31,7 +31,9 @@ jobs:
     - name: Prepare assets
       run: |
         mkdir -p assets
-        cp logo.png assets/logo.png
+        # Capacitor assets expects specific filenames
+        cp logo.png assets/icon.png
+        cp logo.png assets/splash.png
 
     - name: Generate Assets
       run: npx @capacitor/assets generate --android
@@ -43,8 +45,11 @@ jobs:
       run: |
         npx cap add android || true
         npx cap sync android
-        # Inject permissions into AndroidManifest.xml
-        sed -i '/<manifest/a <uses-permission android:name="android.permission.INTERNET" />\\n<uses-permission android:name="android.permission.RECORD_AUDIO" />\\n<uses-permission android:name="android.permission.CAMERA" />\\n<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />\\n<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />\\n<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />' android/app/src/main/AndroidManifest.xml
+        # More robust permission injection
+        cat <<EOF > android/app/src/main/AndroidManifest.xml.new
+        $(sed '/<manifest/a <uses-permission android:name="android.permission.INTERNET" />\n<uses-permission android:name="android.permission.RECORD_AUDIO" />\n<uses-permission android:name="android.permission.CAMERA" />\n<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />\n<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />\n<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />' android/app/src/main/AndroidManifest.xml)
+        EOF
+        mv android/app/src/main/AndroidManifest.xml.new android/app/src/main/AndroidManifest.xml
 
     - name: Build with Gradle
       run: |

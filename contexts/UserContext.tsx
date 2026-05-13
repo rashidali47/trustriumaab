@@ -232,8 +232,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const prevKycStatusRef = useRef<KycStatus | null>(null);
 
   useEffect(() => {
-    if (user && Notification.permission === 'default') {
-        Notification.requestPermission();
+    if (user && typeof window !== 'undefined' && window.Notification && window.Notification.permission === 'default') {
+        window.Notification.requestPermission();
     }
   }, [user]);
 
