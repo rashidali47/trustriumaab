@@ -51,11 +51,19 @@ jobs:
         EOF
         mv android/app/src/main/AndroidManifest.xml.new android/app/src/main/AndroidManifest.xml
 
+    - name: Decode Keystore
+      run: |
+        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/release.keystore
+
     - name: Build with Gradle
       run: |
         cd android
         chmod +x gradlew
-        ./gradlew assembleDebug bundleRelease
+        ./gradlew assembleDebug bundleRelease \
+          -Pandroid.injected.signing.store.file=$(pwd)/app/release.keystore \
+          -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
+          -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
+          -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
