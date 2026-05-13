@@ -28,6 +28,9 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Generate Assets
+      run: npx capacitor-assets generate --iconPath logo.png
+
     - name: Build Web App
       run: npm run build
 
@@ -36,13 +39,7 @@ jobs:
         npx cap add android || true
         npx cap sync android
         # Inject permissions into AndroidManifest.xml
-        sed -i '/<manifest/a \
-    <uses-permission android:name="android.permission.INTERNET" />\
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />\
-    <uses-permission android:name="android.permission.CAMERA" />\
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />\
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />\
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />' android/app/src/main/AndroidManifest.xml
+        sed -i '/<manifest/a <uses-permission android:name="android.permission.INTERNET" />\\n<uses-permission android:name="android.permission.RECORD_AUDIO" />\\n<uses-permission android:name="android.permission.CAMERA" />\\n<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />\\n<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />\\n<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />' android/app/src/main/AndroidManifest.xml
 
     - name: Build with Gradle
       run: |

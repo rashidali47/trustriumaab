@@ -1292,7 +1292,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         updateUser({ notifications: [newNotif, ...user.notifications] });
         
         // Native Push Notification
-        if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
+        if (typeof window !== 'undefined' && window.Notification && window.Notification.permission === 'granted') {
             navigator.serviceWorker.ready.then(registration => {
                 registration.showNotification(title, {
                     body: message,
@@ -1319,13 +1319,13 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
 
         // Browser Notification
-        if (user.settings.notifications.push && typeof window !== 'undefined' && "Notification" in window) {
-            if (Notification.permission === "granted") {
-                new Notification(title, { body: message, icon: 'https://raw.githubusercontent.com/Trustrium/Logos/refs/heads/main/logo.png' });
-            } else if (Notification.permission !== "denied") {
-                Notification.requestPermission().then(permission => {
+        if (user.settings.notifications.push && typeof window !== 'undefined' && window.Notification) {
+            if (window.Notification.permission === "granted") {
+                new window.Notification(title, { body: message, icon: 'https://raw.githubusercontent.com/Trustrium/Logos/refs/heads/main/logo.png' });
+            } else if (window.Notification.permission !== "denied") {
+                window.Notification.requestPermission().then(permission => {
                     if (permission === "granted") {
-                        new Notification(title, { body: message, icon: 'https://raw.githubusercontent.com/Trustrium/Logos/refs/heads/main/logo.png' });
+                        new window.Notification(title, { body: message, icon: 'https://raw.githubusercontent.com/Trustrium/Logos/refs/heads/main/logo.png' });
                     }
                 });
             }
