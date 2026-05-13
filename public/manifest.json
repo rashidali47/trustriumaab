@@ -1,0 +1,61 @@
+{
+  "name": "Trustrium Mining",
+  "short_name": "Trustrium",
+  "description": "The RIUM: Mined With Trust. Join the decentralized network for trust-based mining.",
+  "id": "com.trustrium.app",
+  "start_url": "/",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "minimal-ui"
+  ],
+  "background_color": "#0a0a0a",
+  "theme_color": "#5839FF",
+  "dir": "auto",
+  "lang": "en-US",
+  "orientation": "portrait-primary",
+  "categories": [
+    "finance",
+    "business",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/Trustrium/Logos/refs/heads/main/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/Trustrium/Logos/refs/heads/main/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Mining Terminal",
+      "url": "/",
+      "description": "Open your mining dashboard",
+      "icons": [
+        {
+          "src": "https://raw.githubusercontent.com/Trustrium/Logos/refs/heads/main/logo.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Wallet",
+      "url": "/wallet",
+      "description": "View your RIUM balance",
+      "icons": [
+        {
+          "src": "https://raw.githubusercontent.com/Trustrium/Logos/refs/heads/main/logo.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

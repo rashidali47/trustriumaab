@@ -1,0 +1,64 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and state",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "name": { "type": "string" },
+        "username": { "type": "string" },
+        "phone": { "type": "object" },
+        "avatar": { "type": "string" },
+        "kycStatus": { "type": "string", "enum": ["Not Submitted", "Pending", "Approved", "Rejected"] },
+        "walletAddress": { "type": "string" },
+        "privateKey": { "type": "string" },
+        "walletPin": { "type": "string" },
+        "referrals": { "type": "number" },
+        "riumBalance": { "type": "number" },
+        "trustBalance": { "type": "number" },
+        "totalTrustEarned": { "type": "number" },
+        "miningSessionsCompleted": { "type": "number" },
+        "miningTier": { "type": "number" },
+        "miningEndTime": { "type": "number" },
+        "notifications": { "type": "array" },
+        "readSystemNotifications": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "email", "username"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "System or personal notification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "read": { "type": "boolean" },
+        "type": { "type": "string", "enum": ["developer", "vip", "reminder"] }
+      },
+      "required": ["id", "title", "message", "date"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User documents"
+    },
+    "/users/{userId}/referral_notifications/{notifId}": {
+      "schema": "object",
+      "description": "Short-lived notifications for incoming referrals"
+    },
+    "/system_notifications/{notifId}": {
+      "schema": "Notification",
+      "description": "Global notifications for all users"
+    },
+    "/app_settings/mining": {
+      "schema": "object",
+      "description": "Global mining settings"
+    }
+  }
+}
