@@ -119,7 +119,9 @@ const DailyTaskPage: React.FC = () => {
             });
 
             if (response.text && response.text !== "undefined") {
-                setChallenge(JSON.parse(response.text));
+                const jsonMatch = response.text.match(/\{[\s\S]*\}/);
+                const jsonStr = jsonMatch ? jsonMatch[0] : response.text;
+                setChallenge(JSON.parse(jsonStr));
             }
         } catch (error) {
             console.error("Protocol Error:", error);
@@ -184,7 +186,9 @@ const DailyTaskPage: React.FC = () => {
             });
             
             if (response.text && response.text !== "undefined") {
-                const result = JSON.parse(response.text);
+                const jsonMatch = response.text.match(/\{[\s\S]*\}/);
+                const jsonStr = jsonMatch ? jsonMatch[0] : response.text;
+                const result = JSON.parse(jsonStr);
                 if (result.isFollower) {
                     const success = await submitXFollowTask(xHandle);
                     if (success) {
