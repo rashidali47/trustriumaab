@@ -1292,7 +1292,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         updateUser({ notifications: [newNotif, ...user.notifications] });
         
         // Native Push Notification
-        if (Notification.permission === 'granted') {
+        if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
             navigator.serviceWorker.ready.then(registration => {
                 registration.showNotification(title, {
                     body: message,
