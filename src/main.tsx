@@ -2,7 +2,7 @@
 import React, { Component, ReactNode, ErrorInfo } from 'react';
 import ReactDOM from 'react-dom/client';
 // Fix: Use named import for HashRouter to resolve module export issue.
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import App from './App';
 import { AppProvider } from '../contexts/AppContext';
 import './index.css';
@@ -22,10 +22,10 @@ if ('serviceWorker' in navigator) {
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <AppProvider>
         <App />
       </AppProvider>
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>
 );
