@@ -28,8 +28,13 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Prepare assets
+      run: |
+        mkdir -p assets
+        cp logo.png assets/logo.png
+
     - name: Generate Assets
-      run: npx @capacitor/assets generate --icon logo.png
+      run: npx @capacitor/assets generate --android
 
     - name: Build Web App
       run: npm run build
