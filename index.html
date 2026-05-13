@@ -6,6 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="index, follow" />
     <title>Trustrium App</title>
+    <script>
+      (function() {
+        var originalFetch = window.fetch;
+        try {
+          Object.defineProperty(window, 'fetch', {
+            get: function() { return originalFetch; },
+            set: function(v) { 
+              console.warn('Blocked attempt to overwrite window.fetch', v);
+              console.trace();
+            },
+            configurable: true
+          });
+        } catch (e) {
+          console.error('Failed to set fetch safeguard:', e);
+        }
+      })();
+    </script>
 
     <!-- SEO & Metadata -->
     <meta name="description" content="Join Trustrium App to mine Trust points, earn RIUM tokens, and build your referral team. Experience the next generation of gamified crypto mining simulation." />
@@ -36,6 +53,6 @@
   </head>
   <body class="bg-brand-gray-50 dark:bg-brand-gray-950">
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
