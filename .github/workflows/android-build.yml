@@ -29,7 +29,7 @@ jobs:
       run: npm install
 
     - name: Generate Assets
-      run: npx capacitor-assets generate --iconPath logo.png
+      run: npx @capacitor/assets generate --icon logo.png
 
     - name: Build Web App
       run: npm run build
